@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selamat Ulang Tahun, Moonlight 🌙</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-top:#070b18;
+    --bg-bot:#0d1228;
+    --panel:rgba(22,27,52,0.55);
+    --panel-solid:#161b34;
+    --line:rgba(168,180,232,0.15);
+    --moon:#f5ecd2;
+    --moon-soft:rgba(245,236,210,0.35);
+    --lav:#a8b4e8;
+    --flame:#ffb05a;
+    --pink:#f0a8c0;
+    --text:#ecebf5;
+    --text-dim:#8d92ad;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:linear-gradient(180deg,var(--bg-top),var(--bg-bot) 60%, #0a0e22);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  #stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
+  .star{
+    position:absolute;
+    width:2px;height:2px;
+    background:#fff;
+    border-radius:50%;
+    animation:twinkle ease-in-out infinite;
+  }
+  @keyframes twinkle{0%,100%{opacity:0.15;}50%{opacity:0.9;}}
+
+  .drift{position:absolute;border-radius:50%;opacity:0;animation:driftUp linear infinite;}
+  @keyframes driftUp{
+    0%{transform:translateY(0) translateX(0);opacity:0;}
+    8%{opacity:0.5;}
+    92%{opacity:0.3;}
+    100%{transform:translateY(-100vh) translateX(15px);opacity:0;}
+  }
+
+  .wrap{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:60px 22px 70px;}
+
+  /* ===== HERO ===== */
+  .hero{text-align:center;position:relative;padding:10px 0 36px;}
+
+  .moon-wrap{position:relative;width:130px;height:130px;margin:0 auto 6px;}
+  .moon{
+    width:100%;height:100%;
+    border-radius:50%;
+    background:radial-gradient(circle at 38% 32%, #fffdf4, var(--moon) 55%, #d8caa0 100%);
+    box-shadow:0 0 50px 14px var(--moon-soft), 0 0 110px 40px rgba(245,236,210,0.12);
+    position:relative;
+    animation:breathe 6s ease-in-out infinite;
+  }
+  @keyframes breathe{0%,100%{transform:scale(1);}50%{transform:scale(1.035);}}
+  .crater{position:absolute;border-radius:50%;background:rgba(180,165,130,0.35);}
+
+  .big-num{
+    position:absolute;
+    top:-18px;left:50%;
+    transform:translateX(-50%);
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:170px;
+    line-height:1;
+    color:transparent;
+    -webkit-text-stroke:1.5px rgba(168,180,232,0.16);
+    z-index:-1;
+    user-select:none;
+    pointer-events:none;
+  }
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--lav);
+    opacity:0.85;
+    margin-top:10px;
+  }
+
+  .big-name{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:clamp(44px,12vw,72px);
+    letter-spacing:-0.01em;
+    color:var(--moon);
+    text-shadow:0 0 30px rgba(245,236,210,0.25);
+    margin:4px 0 8px;
+  }
+
+  .identity-line{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:15px;
+    color:var(--text-dim);
+    margin-bottom:18px;
+  }
+  .identity-line b{color:var(--lav);font-style:normal;font-weight:500;}
+
+  .tagline{
+    font-size:15.5px;
+    color:var(--text);
+    opacity:0.9;
+    max-width:380px;
+    margin:0 auto;
+    line-height:1.6;
+  }
+
+  /* ===== CARDS ===== */
+  .card{
+    background:var(--panel);
+    backdrop-filter:blur(14px);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:28px 26px;
+    margin-bottom:22px;
+    opacity:0;
+    transform:translateY(16px);
+    animation:fadeUp 0.7s ease forwards;
+  }
+  .card.d1{animation-delay:0.1s;}
+  .card.d2{animation-delay:0.22s;}
+  @keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
+
+  .label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--lav);
+    opacity:0.8;
+    margin-bottom:14px;
+  }
+
+  .msg{
+    font-family:'Fraunces',serif;
+    font-size:18px;
+    line-height:1.7;
+    color:var(--text);
+  }
+  .msg p{margin-bottom:12px;}
+  .msg p:last-child{margin-bottom:0;}
+
+  /* ===== WISH BOARD ===== */
+  .board-wrap{position:relative;}
+  .board{
+    position:relative;
+    height:340px;
+    border-radius:14px;
+    background:rgba(0,0,0,0.15);
+    border:1px dashed var(--line);
+    overflow:hidden;
+    touch-action:none;
+  }
+  .bubble{
+    position:absolute;
+    width:168px;
+    background:var(--panel-solid);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:11px 13px 12px;
+    cursor:grab;
+    user-select:none;
+    box-shadow:0 10px 24px -8px rgba(0,0,0,0.5);
+    transition:box-shadow 0.15s;
+  }
+  .bubble:active{cursor:grabbing;}
+  .bubble.dragging{z-index:30;box-shadow:0 18px 36px -8px rgba(0,0,0,0.65);}
+  .bubble::after{
+    content:'';
+    position:absolute;
+    bottom:-7px;left:18px;
+    width:14px;height:14px;
+    background:var(--panel-solid);
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    transform:rotate(45deg);
+  }
+  .b-top{display:flex;align-items:center;gap:7px;margin-bottom:6px;}
+  .b-avatar{width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,var(--lav),var(--pink));flex-shrink:0;}
+  .b-name{font-size:12.5px;font-weight:600;color:var(--lav);font-family:'Inter',sans-serif;}
+  .b-text{
+    font-size:12.5px;
+    color:var(--text-dim);
+    line-height:1.45;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+  .board-caption{
+    text-align:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--text-dim);
+    margin-top:10px;
+    opacity:0.7;
+  }
+
+  /* modal */
+  .modal-overlay{
+    position:fixed;inset:0;
+    background:rgba(5,7,16,0.78);
+    backdrop-filter:blur(6px);
+    display:none;
+    align-items:center;justify-content:center;
+    z-index:100;
+    padding:24px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-card{
+    background:var(--panel-solid);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:26px 24px;
+    max-width:340px;
+    width:100%;
+    position:relative;
+    animation:popIn 0.25s ease;
+  }
+  @keyframes popIn{from{opacity:0;transform:scale(0.92);}to{opacity:1;transform:scale(1);}}
+  .modal-close{
+    position:absolute;top:14px;right:16px;
+    background:none;border:none;color:var(--text-dim);
+    font-size:18px;cursor:pointer;
+  }
+  .modal-top{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .modal-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--lav),var(--pink));flex-shrink:0;}
+  .modal-name{font-family:'Fraunces',serif;font-weight:600;font-size:17px;color:var(--moon);}
+  .modal-text{font-size:14.5px;line-height:1.7;color:var(--text);white-space:pre-line;}
+
+  /* ===== CAKE ===== */
+  .cake-section{text-align:center;}
+  .cake-stage{
+    position:relative;
+    width:220px;
+    margin:6px auto 18px;
+  }
+  .cake-stage svg{width:100%;display:block;}
+  .flame{transform-origin:center bottom;animation:flicker 1.6s ease-in-out infinite;}
+  @keyframes flicker{
+    0%,100%{transform:scaleY(1) scaleX(1) rotate(0deg);}
+    30%{transform:scaleY(1.12) scaleX(0.92) rotate(-2deg);}
+    60%{transform:scaleY(0.92) scaleX(1.06) rotate(2deg);}
+  }
+  .flame.blown{opacity:0;transform:scaleY(0);}
+  .smoke{opacity:0;}
+  .smoke.active{animation:smokeRise 1.4s ease-out forwards;}
+  @keyframes smokeRise{
+    0%{opacity:0.5;transform:translateY(0) scale(0.6);}
+    100%{opacity:0;transform:translateY(-26px) scale(1.4);}
+  }
+  .cake-stage{cursor:pointer;}
+  .cake-hint{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    color:var(--text-dim);
+    margin-bottom:2px;
+  }
+  .cake-reveal{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-size:15.5px;
+    color:var(--moon);
+    max-width:320px;
+    margin:14px auto 0;
+    opacity:0;
+    transform:translateY(8px);
+    transition:opacity 0.6s, transform 0.6s;
+  }
+  .cake-reveal.show{opacity:1;transform:translateY(0);}
+
+  /* ===== MUSIC PILL ===== */
+  .np-pill{
+    position:fixed;
+    bottom:18px;left:50%;
+    transform:translateX(-50%);
+    display:flex;align-items:center;gap:10px;
+    background:rgba(22,27,52,0.85);
+    backdrop-filter:blur(10px);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:8px 16px 8px 8px;
+    box-shadow:0 12px 30px rgba(0,0,0,0.5);
+    cursor:pointer;
+    z-index:40;
+    max-width:90vw;
+    animation:pillPulse 2.6s ease-in-out infinite;
+  }
+  @keyframes pillPulse{
+    0%,100%{box-shadow:0 12px 30px rgba(0,0,0,0.5), 0 0 0 0 rgba(168,180,232,0.0);}
+    50%{box-shadow:0 12px 30px rgba(0,0,0,0.5), 0 0 0 7px rgba(168,180,232,0.12);}
+  }
+  .vinyl{
+    width:30px;height:30px;border-radius:50%;
+    background:radial-gradient(circle at center, var(--moon) 0 4px, #2a2f50 5px, #2a2f50 12px, var(--lav) 13px);
+    flex-shrink:0;
+    animation:spin 3s linear infinite;
+    animation-play-state:paused;
+  }
+  .np-pill.playing .vinyl{animation-play-state:running;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .np-text{line-height:1.25;white-space:nowrap;overflow:hidden;}
+  .np-title{font-size:12.5px;font-weight:600;color:var(--text);}
+  .np-artist{font-size:11px;color:var(--text-dim);}
+  .np-icon{font-size:15px;margin-left:2px;}
+
+  .footer{
+    text-align:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--text-dim);
+    margin-top:14px;
+    padding-bottom:50px;
+    opacity:0.75;
+  }
+
+  #confetti-layer{position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden;}
+  .confetti{position:absolute;top:-20px;border-radius:2px;animation:fall linear forwards;}
+  @keyframes fall{to{transform:translateY(110vh) rotate(540deg);}}
+
+  @media (max-width:480px){
+    .wrap{padding:44px 14px 60px;}
+    .card{padding:22px 18px;}
+    .board{height:460px;}
+    .bubble{width:148px;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:0.01ms !important;animation-iteration-count:1 !important;}
+  }
+</style>
+</head>
+<body>
+
+<noscript>
+  <div style="position:fixed;inset:0;background:#0a0e22;color:#f4ede4;display:flex;align-items:center;justify-content:center;text-align:center;padding:30px;font-family:sans-serif;z-index:999;">
+    <div>🌙 Halaman ini butuh JavaScript buat nampilin animasi & wishes.<br><br>Coba buka pakai browser penuh (Safari/Chrome), bukan preview file manager ya!</div>
+  </div>
+</noscript>
+
+<div id="stars"></div>
+<div id="confetti-layer"></div>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="moon-wrap">
+      <div class="big-num">22</div>
+      <div class="moon">
+        <div class="crater" style="width:14px;height:14px;top:28px;left:30px;"></div>
+        <div class="crater" style="width:8px;height:8px;top:60px;left:75px;"></div>
+        <div class="crater" style="width:10px;height:10px;top:80px;left:35px;"></div>
+      </div>
+    </div>
+    <div class="eyebrow">selamat ulang tahun untuk</div>
+    <h1 class="big-name">Moonlight</h1>
+    <div class="identity-line">akrab disapa <b>Mullet</b> · a.k.a <b>Bani</b></div>
+    <p class="tagline">22 tahun, dan masih runner-up sultan begadang sejagad server 🌙</p>
+  </div>
+
+  <!-- MAIN MESSAGE -->
+  <div class="card d1">
+    <div class="label">buat mullet,</div>
+    <div class="msg">
+      <p>Met ultah ke-22! Resmi jadi kepala suku begadang — rekor mabar lo sampe subuh masih juara, belum ada yang ngalahin.</p>
+      <p>Semoga taun ini makin santuy, rejeki lancar, push rank makin manis, dan ya... akhirnya nemu yang beneran cocok biar gak galau receh mulu tiap malem 😏🌙 Tetep jadi partner push rank paling diandelin, walau sering ke-AFK pas lagi genting wkwk.</p>
+    </div>
+  </div>
+
+  <!-- WISHES BOARD -->
+  <div class="card d2">
+    <div class="label">📡 transmisi receh dari grup discord</div>
+    <div class="board-wrap">
+      <div class="board" id="board"></div>
+      <div class="board-caption">geser buat rapihin posisinya, klik buat baca lengkap ✨</div>
+    </div>
+  </div>
+
+  <!-- CAKE -->
+  <div class="cake-section">
+    <div class="cake-hint">satu lilin lagi, Mul 🕯️ — tap buat tiup</div>
+    <div class="cake-stage" id="cakeStage" onclick="blowCandle()">
+      <svg viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="100" cy="155" rx="70" ry="9" fill="rgba(0,0,0,0.35)"/>
+        <rect x="35" y="100" width="130" height="48" rx="10" fill="#caa6e0"/>
+        <path d="M35 108 Q50 96 65 108 T95 108 T125 108 T165 108 V100 H35 Z" fill="#dcc0ec"/>
+        <rect x="55" y="62" width="90" height="44" rx="10" fill="#f0a8c0"/>
+        <path d="M55 70 Q68 58 81 70 T107 70 T133 70 T145 70 V62 H55 Z" fill="#f6c4d6"/>
+        <circle cx="70" cy="84" r="3.5" fill="#fff4e0"/>
+        <circle cx="100" cy="90" r="3.5" fill="#fff4e0"/>
+        <circle cx="130" cy="84" r="3.5" fill="#fff4e0"/>
+        <circle cx="85" cy="96" r="3.5" fill="#a8b4e8"/>
+        <circle cx="115" cy="96" r="3.5" fill="#a8b4e8"/>
+        <rect x="96" y="34" width="8" height="30" rx="3" fill="#fdf6e3"/>
+        <rect x="96" y="34" width="8" height="30" rx="3" fill="url(#stripe)" opacity="0.5"/>
+        <defs>
+          <pattern id="stripe" width="8" height="8" patternUnits="userSpaceOnUse">
+            <rect width="4" height="8" fill="#e8a8c0"/>
+          </pattern>
+        </defs>
+        <ellipse class="smoke" id="smoke" cx="100" cy="26" rx="6" ry="9" fill="#cfd2de"/>
+        <path class="flame" id="flame" d="M100 10 C94 18 94 26 100 32 C106 26 106 18 100 10 Z" fill="#ffb05a"/>
+        <path class="flame" id="flameInner" d="M100 16 C97 21 97 26 100 29 C103 26 103 21 100 16 Z" fill="#ffe27a" style="transform-origin:center bottom;animation:flicker 1.3s ease-in-out infinite reverse;"/>
+      </svg>
+    </div>
+    <p class="cake-reveal" id="cakeReveal">🌙 Met ultah, Moonlight. Semoga semua yang lo minta diem-diem... beneran kesampean.</p>
+  </div>
+
+  <div class="footer">made with ❤️ Nelayan Bahagia ✨</div>
+</div>
+
+<!-- music pill -->
+<div class="np-pill" id="npPill" onclick="toggleMusic()">
+  <div class="vinyl"></div>
+  <div class="np-text">
+    <div class="np-title">Selamat Ulang Tahun</div>
+    <div class="np-artist">Jamrud</div>
+  </div>
+  <div class="np-icon" id="npIcon">🔇</div>
+</div>
+<iframe id="bgMusic"
+  src="https://www.youtube.com/embed/IzvZ0gOXiNA?autoplay=1&mute=1&loop=1&playlist=IzvZ0gOXiNA&controls=0"
+  style="position:fixed;width:2px;height:2px;opacity:0;pointer-events:none;bottom:0;right:0;border:0;"
+  allow="autoplay">
+</iframe>
+
+<!-- wish detail modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-top">
+      <div class="modal-avatar"></div>
+      <div class="modal-name" id="modalName"></div>
+    </div>
+    <div class="modal-text" id="modalText"></div>
+  </div>
+</div>
+
+<script>
+  /* ============ stars ============ */
+  const starLayer = document.getElementById('stars');
+  for(let i=0;i<70;i++){
+    const s = document.createElement('div');
+    s.className='star';
+    s.style.left = Math.random()*100+'vw';
+    s.style.top = Math.random()*100+'vh';
+    s.style.animationDuration = (Math.random()*3+2)+'s';
+    s.style.animationDelay = (Math.random()*4)+'s';
+    starLayer.appendChild(s);
+  }
+  const colorsDrift = ['#a8b4e8','#f0a8c0','#f5ecd2'];
+  for(let i=0;i<16;i++){
+    const d=document.createElement('div');
+    d.className='drift';
+    const size=Math.random()*3+1.5;
+    d.style.width=size+'px';d.style.height=size+'px';
+    d.style.left=Math.random()*100+'vw';
+    d.style.bottom='-10px';
+    d.style.background=colorsDrift[Math.floor(Math.random()*colorsDrift.length)];
+    d.style.animationDuration=(Math.random()*18+16)+'s';
+    d.style.animationDelay=(Math.random()*12)+'s';
+    starLayer.appendChild(d);
+  }
+
+  /* ============ confetti ============ */
+  function burstConfetti(count){
+    const layer=document.getElementById('confetti-layer');
+    const colors=['#a8b4e8','#f0a8c0','#f5ecd2','#ffb05a','#caa6e0'];
+    for(let i=0;i<count;i++){
+      const c=document.createElement('div');
+      c.className='confetti';
+      const size=Math.random()*7+5;
+      c.style.width=size+'px';c.style.height=size*0.4+'px';
+      c.style.left=Math.random()*100+'vw';
+      c.style.background=colors[Math.floor(Math.random()*colors.length)];
+      c.style.animationDuration=(Math.random()*2.5+2.5)+'s';
+      c.style.animationDelay=(Math.random()*0.5)+'s';
+      layer.appendChild(c);
+      setTimeout(()=>c.remove(),6000);
+    }
+  }
+
+  /* ============ wishes data — diisi dari kru discord ============ */
+  const wishes = [
+    {name:"Ameng", text:"selamat ulang tahun mullet moga panjang umur sehat selalu🤟🤟🔥"},
+    {name:"Maii", text:"mullet, happy birthday yaw! semoga tahun ini banyak hal hal baik dan selalu sehat. be happy terus mullet! 🥳"},
+    {name:"Dewa", text:"Happy birthday, Mullet.\nSemoga di usia baru ini, banyak hal baik yang datang ke hidup lu. Rezekinya makin lancar, umur panjang, sehat selalu. Dan semoga semua target sama keinginan yang lu pendem selama ini, satu-satu tercapai. Sukses terus mullet"},
+    {name:"Rizz", text:"met ultah mullet~ semoga makin happy, makin sukses, dan ga terjebak justplen lagii🤙🏻🔥"},
+    {name:"Akak Caren", text:"HBDD mullet bussuuu🤟🔥🔥😜"},
+    {name:"Bang Ded", text:"🥳 HaBeDe Mullet 🥳\nsemoga selalu di beri kesehatan, panjang umurnya, di lancarkan rejekinya, makin dewasa, dan selalu menjadi diri sendiri."},
+    {name:"Bang Joo", text:"untuk mulet.\nselamat bertambah usia. sudah tua banyak bertobat jangan gragas 1 di habisin dulu baru cari yang lain.\njangan di rumah aja keluar banyak cobaan yang harus di coba\nselamat ulang tahun babi 💩"},
+    {name:"Kapra", text:"hbd mullet"},
+    {name:"Bull", text:"habedeeee muyett ank kecil yg dah dewasa skrng udh pacaran 🤏🏻, mulett jangan racun putri kecilmu biar dia tdr 😌."}
+  ];
+
+  /* ============ render scattered bubbles ============ */
+  const board = document.getElementById('board');
+  const placed = [];
+  function randomPos(bw,bh,boxW,boxH){
+    for(let tries=0; tries<40; tries++){
+      const x = Math.random()*(bw-boxW-12)+6;
+      const y = Math.random()*(bh-boxH-12)+6;
+      let ok = true;
+      for(const p of placed){
+        if(Math.abs(p.x-x)<boxW*0.7 && Math.abs(p.y-y)<boxH*0.7){ok=false;break;}
+      }
+      if(ok) return {x,y};
+    }
+    return {x:Math.random()*(bw-boxW), y:Math.random()*(bh-boxH)};
+  }
+
+  function buildBoard(){
+    board.innerHTML='';
+    placed.length=0;
+    const bw = board.clientWidth;
+    const bh = board.clientHeight;
+    const boxW = bw < 380 ? 148 : 168;
+    const boxH = 78;
+
+    wishes.forEach((w,i)=>{
+      const pos = randomPos(bw,bh,boxW,boxH);
+      placed.push({x:pos.x,y:pos.y});
+      const el = document.createElement('div');
+      el.className='bubble';
+      el.style.left = pos.x+'px';
+      el.style.top = pos.y+'px';
+      el.style.width = boxW+'px';
+      const rot = (Math.random()*10-5).toFixed(1);
+      el.style.transform = `rotate(${rot}deg)`;
+      el.innerHTML = `
+        <div class="b-top">
+          <div class="b-avatar"></div>
+          <div class="b-name">${escapeHtml(w.name)}</div>
+        </div>
+        <div class="b-text">${escapeHtml(w.text)}</div>
+      `;
+      makeDraggable(el, w);
+      board.appendChild(el);
+    });
+  }
+
+  function escapeHtml(str){
+    const d=document.createElement('div');
+    d.textContent=str;
+    return d.innerHTML;
+  }
+
+  function makeDraggable(el, data){
+    let startX,startY,origX,origY,moved=false;
+    function onDown(e){
+      const p = e.touches ? e.touches[0] : e;
+      startX=p.clientX; startY=p.clientY;
+      origX=parseFloat(el.style.left); origY=parseFloat(el.style.top);
+      moved=false;
+      el.classList.add('dragging');
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+      document.addEventListener('touchmove', onMove, {passive:false});
+      document.addEventListener('touchend', onUp);
+    }
+    function onMove(e){
+      const p = e.touches ? e.touches[0] : e;
+      const dx = p.clientX-startX, dy = p.clientY-startY;
+      if(Math.abs(dx)>5 || Math.abs(dy)>5) moved=true;
+      if(moved){
+        e.preventDefault && e.preventDefault();
+        const bw = board.clientWidth, bh = board.clientHeight;
+        const w = el.offsetWidth, h = el.offsetHeight;
+        let nx = origX+dx, ny = origY+dy;
+        nx = Math.max(0, Math.min(bw-w, nx));
+        ny = Math.max(0, Math.min(bh-h, ny));
+        el.style.left = nx+'px';
+        el.style.top = ny+'px';
+      }
+    }
+    function onUp(){
+      el.classList.remove('dragging');
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+      document.removeEventListener('touchmove', onMove);
+      document.removeEventListener('touchend', onUp);
+      if(!moved) openModal(data);
+    }
+    el.addEventListener('mousedown', onDown);
+    el.addEventListener('touchstart', onDown, {passive:true});
+  }
+
+  function openModal(data){
+    document.getElementById('modalName').textContent = data.name;
+    document.getElementById('modalText').textContent = data.text;
+    document.getElementById('modalOverlay').classList.add('open');
+  }
+  function closeModal(){
+    document.getElementById('modalOverlay').classList.remove('open');
+  }
+
+  window.addEventListener('load', buildBoard);
+  let resizeTimer;
+  window.addEventListener('resize', ()=>{
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(buildBoard, 300);
+  });
+
+  /* ============ cake / candle ============ */
+  let lit = true;
+  let everBlown = false;
+  function blowCandle(){
+    const flame = document.getElementById('flame');
+    const flameInner = document.getElementById('flameInner');
+    const smoke = document.getElementById('smoke');
+    if(lit){
+      lit=false;
+      flame.classList.add('blown');
+      flameInner.classList.add('blown');
+      smoke.classList.add('active');
+      setTimeout(()=>smoke.classList.remove('active'), 1400);
+      burstConfetti(70);
+      if(!everBlown){
+        everBlown = true;
+        document.getElementById('cakeReveal').classList.add('show');
+      }
+    } else {
+      lit = true;
+      flame.classList.remove('blown');
+      flameInner.classList.remove('blown');
+    }
+  }
+
+  /* ============ music ============ */
+  let muted = true;
+  let everStarted = false;
+  function toggleMusic(){
+    muted = !muted;
+    everStarted = true;
+    const iframe = document.getElementById('bgMusic');
+    iframe.src = `https://www.youtube.com/embed/IzvZ0gOXiNA?autoplay=1&mute=${muted?1:0}&loop=1&playlist=IzvZ0gOXiNA&controls=0`;
+    document.getElementById('npIcon').textContent = muted ? '🔇' : '🔊';
+    document.getElementById('npPill').classList.toggle('playing', !muted);
+  }
+</script>
+
+</body>
+</html>
